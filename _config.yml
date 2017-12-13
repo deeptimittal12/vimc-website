@@ -3,6 +3,8 @@
 url: "http://vimchub.github.io"
 baseurl: ""
 
+destination: static
+
 title: Vaccine Impact Modelling Consortium
 description: The Vaccine Impact Modelling Consortium (VIMC) was established in 2016 for a period of five years to coordinate the ongoing work of several groups focusing on vaccine impact modelling.
 
