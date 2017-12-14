@@ -8,7 +8,7 @@ SRC=/srv/jekyll
 BRANCH=$1
 BUNDLE_CACHE=$SRC/_bundle
 if [ -z "$BRANCH" ]; then
-ls    BRANCH=origin/master
+    BRANCH=origin/master
 fi
 
 if [ $BRANCH == "HEAD" ]; then
