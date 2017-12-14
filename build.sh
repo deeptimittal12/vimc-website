@@ -1,15 +1,23 @@
 #!/usr/bin/env bash
-JEKYLL_VERSION=3.3.1
+set -ex
+IMAGE=docker.montagu.dide.ic.ac.uk:5000/vimc-website-builder:i1205
+#docker pull $IMAGE
+VOLUME=$1
+BRANCH=$2
+if [ -z $VOLUME ]; then
+    VOLUME_MAP=""
+else
+    if [ "$VOLUME" == . ]; then
+        VOLUME=$PWD
+    fi
+    if [ "$VOLUME" == "$PWD" ]; then
+        BRANCH=HEAD
+        shift
+    fi
+    VOLUME_MAP="-v $VOLUME:/srv/jekyll"
+fi
 
-JEKYLL_IMAGE=jekyll/builder:$JEKYLL_VERSION
-BUNDLE_CACHE=vimc-website-bundle-cache
-
-docker pull $JEKYLL_IMAGE
-
-docker volume create $BUNDLE_CACHE
-
-docker run --rm \
-       -v $BUNDLE_CACHE:/usr/local/bundle \
-       -v ${PWD}:/srv/jekyll \
-       $JEKYLL_IMAGE \
-       jekyll build
+docker run -it --rm \
+       $VOLUME_MAP \
+       $IMAGE \
+       build-site.sh $BRANCH
