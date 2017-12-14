@@ -20,4 +20,5 @@ fi
 docker run -t --rm \
        $VOLUME_MAP \
        $IMAGE \
+       -u ${UID} \
        build-site.sh $BRANCH
