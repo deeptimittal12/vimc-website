@@ -6,7 +6,6 @@
 set -ex
 SRC=/srv/jekyll
 BRANCH=$1
-BUNDLE_CACHE=$SRC/_bundle
 if [ -z "$BRANCH" ]; then
     BRANCH=origin/master
 fi
@@ -29,14 +28,12 @@ else
     git -C $SRC reset --hard $BRANCH
 fi
 
-if [ -d $BUNDLE_CACHE ]; then
+if [ -d $USER_BUNDLE_CACHE ]; then
     echo "Bundle cache already set up"
 else
     echo "Setting up bundle cache"
-    mv /usr/local/bundle/ $BUNDLE_CACHE
+    cp -r /usr/local/bundle_src $USER_BUNDLE_CACHE
 fi
-rm -rf /usr/local/bundle
-ln -s $BUNDLE_CACHE /usr/local/bundle
 
 echo "Building website"
 jekyll build
