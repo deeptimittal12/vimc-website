@@ -17,7 +17,7 @@ else
     VOLUME_MAP="-v $VOLUME:/srv/jekyll"
 fi
 
-docker run -it --rm \
+docker run -t --rm \
        $VOLUME_MAP \
        $IMAGE \
        build-site.sh $BRANCH
