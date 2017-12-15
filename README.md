@@ -56,3 +56,36 @@ Posts are created in exactly the same way as regular pages: you still need to ma
 The general layout of the pages can't be changed easily.  But things like colour, spacing, fonts, and any other CSS style can easily be changed by adding CSS rules to the [`vimc.css`](./css/vimc.css) file. For example, you can change the size of the text, or the background colour of the navigation bar, or the colour of the text in the footer.
 
 Note that the template was designed in a way such that it changes drastically when you view it on a big screen (laptop) vs a small screen (phone)
+
+## Building the site
+
+### Locally
+
+Run
+
+```
+./build.sh .
+```
+
+which will update the contents of the `static` directory with the new website.  This is what happens on teamcity.
+
+### Transient test
+
+Running
+
+```
+./build.sh
+```
+
+Which will clone the website (the master branch), set up jekyll and build the website, then disappear
+
+### Into volume
+
+Run
+
+```
+docker volume create vimc-website-volume
+./build.sh vimc-website-volume origin/master
+```
+
+The last argument is the reference (hash, branch, tag, etc) to build.  The default is `origin/master`.  This will clone or update the sources within the volume, then set the sources to the required reference (use `HEAD` to prevent this), then build the site.  Gems are cached into the volume and the built website appears at `static`.
